@@ -30,7 +30,7 @@ public static String getGreeting(String envVarName);
 - Uses a labeled `break` to exit processing early when a terminating condition is met
 
 ```java
-public static void processValues(List<List<Integer>> data);
+public static int processValues(List<List<Integer>> data);
 ```
 
 #### Example Data for `processValues`:

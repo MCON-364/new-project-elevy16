@@ -9,17 +9,15 @@ public class Main {
         // call getGreeting with env variable that might exist
         var greeting1 = getGreeting("USERNAME");
         System.out.println(greeting1);
+
         // call getGreeting with env variable that doesn't exist
         var greeting2 = getGreeting("NO_SUCH_VAR");
         System.out.println(greeting2);
 
         // sample data for processValues
-        var data = List.of(
-                List.of(1, 23, 32),
-                List.of(0, 55, 6), // skip rest of list when hits 0
+        var data = List.of(List.of(1, 23, 32), List.of(0, 55, 6), // skip rest of list when hits 0
                 List.of(79, 8, 99), // stops processing when hits 99
-                List.of(2, 98, 43)
-        );
+                List.of(2, 98, 43));
         System.out.println("\nProcessing values");
         processValues(data);
     }
@@ -42,20 +40,17 @@ public class Main {
      */
     public static String getGreeting(String envVarName) {
         var userName = getUserName(envVarName);
-        var greeting = switch (userName.isPresent() ? 1 : 0) {// cant use switch on a boolean?
-            case 1 -> { // username exists
-                var sb = new StringBuilder();
-                sb.append("Hello, ").append(userName.get()).append("!");
-                yield sb.toString();
-            }
-            case 0 -> { // username doesn't exist
-                var sb = new StringBuilder();
-                sb.append("Hello, Guest!");
-                yield sb.toString();
-            }
-            default -> throw new IllegalStateException();
-        };
-        return greeting;
+
+        if (userName.isPresent()) { // username exists
+            var sb = new StringBuilder();
+            sb.append("Hello, ").append(userName.get());
+            return sb.toString();
+
+        } else { // username doesn't exist
+            var sb = new StringBuilder();
+            sb.append("Hello, World");
+            return sb.toString();
+        }
     }
 
     /**
@@ -63,20 +58,28 @@ public class Main {
      * - When 0: skips to next outer list
      * - When 99: exits all processing
      *
-     * @param data nested list structure to process
+     * @param data nested list to process
+     * @return int
      */
-    public static void processValues(List<List<Integer>> data) {
+    public static int processValues(List<List<Integer>> data) {
+        int counter = 0; // count total processed values
+
         outerloop:
         for (var innerList : data) { // outer loop goes through each list
+
             for (var value : innerList) { // inner list goes through each value in list
+
                 if (value == 0) {
                     continue outerloop; // skip to next inner list
                 }
                 if (value == 99) {
                     break outerloop; // exit everything
                 }
+
                 System.out.println("Processing value " + value);
+                counter++;
             }
         }
+        return counter;
     }
 }
