@@ -17,7 +17,6 @@ public static Optional<String> getUserName(String envVarName);
 ### 2. Create a public static method `getGreeting`
 - Calls `getUserName`
 - Uses `var` for local variables where the type is obvious
-- Uses a switch expression with `yield` to decide how to build the greeting based on whether the username is present
 - Constructs the greeting using `StringBuilder`
 
 ```java
@@ -28,9 +27,10 @@ public static String getGreeting(String envVarName);
 - Iterates over a `List<List<Integer>>`
 - Uses a labeled `continue` to skip to the next outer list when a condition is met
 - Uses a labeled `break` to exit processing early when a terminating condition is met
+- Returns number of processed rows
 
 ```java
-public static void processValues(List<List<Integer>> data);
+public static Integer processValues(List<List<Integer>> data);
 ```
 
 #### Example Data for `processValues`:
